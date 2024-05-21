@@ -7,6 +7,7 @@ const router = express.Router();
 router.post('/create-student', StudentControllers.createStudent);
 router.get('/', StudentControllers.getAllStudents);
 router.get('/:studentId', StudentControllers.getSingleStudentById);
+router.delete('/:studentId', StudentControllers.deleteStudentById)
 
 // ! here router is an object itself so not need to export as object like {router}, should export only router because it hold an object of routes.
 export const StudentRoutes = router;
