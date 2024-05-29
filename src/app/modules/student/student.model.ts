@@ -7,10 +7,10 @@ import {
   TLocalGuardian,
   TStudent,
   TUserName,
-} from './student/student.interface';
+} from './student.interface';
 
 import bcrypt from 'bcrypt';
-import config from '../config';
+import config from '../../config';
 
 
 const userNameSchema = new Schema<TUserName>({
@@ -103,6 +103,12 @@ const localGuardianSchema = new Schema<TLocalGuardian>({
 
 const studentSchema = new Schema<TStudent, StudentModel>({
   id: { type: String, required: [true, 'ID is required'], unique: true },
+  user: {
+    type: Schema.Types.ObjectId,
+    required: [true, 'User id is required'],
+    unique: true,
+    ref: 'User',    // User model
+  },
   password: {
     type: String, required: [true, 'password is required'], maxLength: [20, "password can not be more than 20 characters"],
     minLength: [6, "password can not be less than 6 characters"]
@@ -158,14 +164,6 @@ const studentSchema = new Schema<TStudent, StudentModel>({
     required: [true, 'Local Guardian Details is required'],
   },
   profileImg: { type: String },
-  isActive: {
-    type: String,
-    enum: {
-      values: ['active', 'blocked'],
-      message: "'{VALUE}' is not valid",
-    },
-    default: 'active',
-  },
   isDeleted: {
     type: Boolean,
     default: false,
