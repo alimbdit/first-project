@@ -1,7 +1,8 @@
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
-import { StudentRoutes } from './app/modules/student/student.route';
-import { UserRoutes } from './app/modules/user/user.route';
+import globalErrorHandler from './app/middlewares/globalErrorHandler';
+import notFound from './app/middlewares/notFound';
+import router from './app/routes';
 
 const app: Application = express();
 
@@ -12,14 +13,20 @@ app.use(express.urlencoded({ extended: true }));
 
 // ! application routes
 // & use routes from routers
-app.use('/api/v1/students', StudentRoutes);
-app.use('/api/v1/users', UserRoutes);
+app.use('/api/v1', router);
 
-const getAController = (req: Request, res: Response) => {
-  const a = 10;
-  res.send(a);
+const test = (req: Request, res: Response) => {
+  // const a = 10;
+  // res.send(a);
+  res.send('server is running!');
 };
 
-app.get('/', getAController);
+app.get('/', test);
+
+// ! global Error Handler Middleware
+app.use(globalErrorHandler);
+
+// ! NOT found Middleware
+app.use(notFound);
 
 export default app;

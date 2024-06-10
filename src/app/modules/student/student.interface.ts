@@ -1,4 +1,4 @@
-import { Model, Types } from "mongoose";
+import { Model, Types } from 'mongoose';
 
 export type TUserName = {
   firstName: string;
@@ -41,15 +41,11 @@ export type TStudent = {
   isDeleted: boolean;
 };
 
-
 // ! for creating static
 
 export interface StudentModel extends Model<TStudent> {
-  isUserExists(id: string): Promise<string | null>
+  isUserExists(id: string): Promise<string | null>;
 }
-
-
-
 
 // ! for creating instance
 
