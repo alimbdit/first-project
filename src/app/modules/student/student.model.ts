@@ -1,5 +1,5 @@
 // import validator from 'validator';
-import { Schema, model } from 'mongoose';
+import { Schema, Types, model } from 'mongoose';
 import {
   // StudentMethods,
   StudentModel,
@@ -117,7 +117,7 @@ const studentSchema = new Schema<TStudent, StudentModel>(
       },
       required: [true, 'Gender is required'],
     },
-    DateOfBirth: { type: String },
+    DateOfBirth: { type: Date },
     email: {
       type: String,
       required: [true, 'Email is required'],
@@ -156,6 +156,11 @@ const studentSchema = new Schema<TStudent, StudentModel>(
       required: [true, 'Local Guardian Details is required'],
     },
     profileImg: { type: String },
+    admissionSemester: {
+      type: Schema.Types.ObjectId,
+      ref: 'AcademicSemester',
+
+    },
     isDeleted: {
       type: Boolean,
       default: false,

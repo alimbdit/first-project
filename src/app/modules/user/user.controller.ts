@@ -1,14 +1,11 @@
-import { NextFunction, Request, Response } from 'express';
+import { RequestHandler } from 'express';
 import { UserServices } from './user.service';
 import sendResponse from '../../utils/sendResponse';
 import httpStatus from 'http-status';
+import catchAsync from '../../utils/catchAsync';
 
-const createStudent = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  try {
+const createStudent = catchAsync(async (req, res, next) => {
+
     // ! schema validation using ZOD
 
     const { password, student: studentData } = req.body;
@@ -21,8 +18,8 @@ const createStudent = async (
 
     // will call service fun to send this data. and value comes from ZOD validation.
     const result = await UserServices.createStudentIntoDB(
-      password,
-      studentData,
+        password,
+        studentData,
     );
 
     // & ===============data validation using ZOD=======================
@@ -44,16 +41,14 @@ const createStudent = async (
     // send response
 
     sendResponse(res, {
-      statusCode: httpStatus.OK,
-      success: true,
-      message: 'Student is created  successfully.',
-      data: result,
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'Student is created  successfully.',
+        data: result,
     });
-  } catch (err) {
-    next(err);
-  }
-};
+
+});
 
 export const UserControllers = {
-  createStudent,
+    createStudent,
 };
