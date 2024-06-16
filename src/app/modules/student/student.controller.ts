@@ -7,11 +7,7 @@ import catchAsync from '../../utils/catchAsync';
 // import studentValidationSchema from './student.zod.validation';
 // import studentJoiValidationSchema from './student.joi.validation';
 
-
-
-
 const getAllStudents = catchAsync(async (req, res) => {
-
   const result = await StudentServices.getAllStudentFromDB();
 
   sendResponse(res, {
@@ -20,14 +16,9 @@ const getAllStudents = catchAsync(async (req, res) => {
     message: 'Students are retrieved  successfully.',
     data: result,
   });
-
 });
 
-
-
-
 const getSingleStudentById = catchAsync(async (req, res) => {
-
   const { studentId } = req.params;
   const result = await StudentServices.getSingleStudentFromDB(studentId);
 
@@ -37,10 +28,23 @@ const getSingleStudentById = catchAsync(async (req, res) => {
     message: 'Student is retrieved successfully.',
     data: result,
   });
-})
+});
+
+const updateStudent = catchAsync(async (req, res) => {
+  const { studentId } = req.params;
+  const { student } = req.body;
+
+  const result = await StudentServices.updateStudentIntoDB(studentId, student);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Student is updated successfully !',
+    data: result,
+  });
+});
 
 const deleteStudentById = catchAsync(async (req, res) => {
-
   const { studentId } = req.params;
   const result = await StudentServices.deleteStudentFromDB(studentId);
 
@@ -50,11 +54,11 @@ const deleteStudentById = catchAsync(async (req, res) => {
     message: 'Student is deleted successfully',
     data: result,
   });
-
 });
 
 export const StudentControllers = {
   getAllStudents,
   getSingleStudentById,
   deleteStudentById,
+  updateStudent,
 };

@@ -8,6 +8,7 @@ import {
   TStudent,
   TUserName,
 } from './student.interface';
+import { ref } from 'joi';
 
 const userNameSchema = new Schema<TUserName>({
   firstName: {
@@ -159,11 +160,14 @@ const studentSchema = new Schema<TStudent, StudentModel>(
     admissionSemester: {
       type: Schema.Types.ObjectId,
       ref: 'AcademicSemester',
-
     },
     isDeleted: {
       type: Boolean,
       default: false,
+    },
+    academicDepartment: {
+      type: Schema.Types.ObjectId,
+      ref: 'AcademicDepartment',
     },
   },
   {
